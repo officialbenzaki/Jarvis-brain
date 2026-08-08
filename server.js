@@ -1,19 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+
 app.use(cors());
 app.use(express.json());
-
-const JARVIS_KEY = process.env.JARVIS_ACCESS_KEY;
 
 app.get('/', (req, res) => {
   res.json({status: "Jarvis Online", owner: "officialbenzaki"});
 });
 
-app.post('/api/jarvis', (req, res) => {
-  const { key, message } = req.body;
-  if (key !== JARVIS_KEY) return res.status(401).json({error: 'Unauthorized'});
-  res.json({reply: `Nimesikia: ${message}. Niko tayari kusaidia.`});
+app.post('/ask', async (req, res) => {
+  const { question } = req.body;
+  let answer = "Nimesikia ulisema: " + question + ". Niko tayari kukusaidia Mkuu.";
+  res.json({ answer });
 });
 
 const port = process.env.PORT || 10000;
